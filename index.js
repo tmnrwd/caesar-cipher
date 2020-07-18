@@ -8,11 +8,12 @@ plain text (decoded using the chosen key).
 coded message (encoded using the chosen key).
 */
 
-let encodeNumber = 4;
-let encodeDirection = "L";
-let message = "caesar salad.£$%^";
+let encodeNumber = 1;
+let encodeDirection = "";
+let message = "";
 let encodeSpecifics;
-let inputArray = {};                                            //array of the message's letters/spaces
+let inputArray = {};                                          //array of the message's letters/spaces
+let encodeDecode = ""
 
 //let numberArray = Array.from(Array(26), (_, i) => i + 1);
 let numberArray = {};                                           //array of message's letters/spaces converted into numbers/spaces
@@ -20,21 +21,48 @@ let applyEncodeArray = {};
 let numbersToLettersArray = {};
 let encodedStringArray = {};
 let encodedString = "";
+let decodedString = "";
+let result = "";
 
 //create list1, a list of the message, containing each of its letters
 //convert the list into numbers (e.g. A = 1, B = 2)
 //create listAlpha, a list of the alphabet
 //alter the numbers of each item in list1 by the encodeNumber. increase them if encodeDirection = R, decrease if it = L
 //convert the numbers into letters
+
+function grabInputs() {
+    encodeNumber = document.getElementById("encode-number-box").value;
+    message = document.getElementById("input-message").value;
+    if (document.getElementById("encode-chosen").checked) {
+        encodeDecode = "encode";
+    } else if (document.getElementById("decode-chosen").checked) {
+        encodeDecode = "decode";
+    }
+
+}
+
+function grabDirection() {
+    if (document.getElementById("reverse-shift").checked) {
+        encodeDirection = "L";
+    } else if (document.getElementById("standard-shift").checked) {
+        encodeDirection = "R";
+    }
+}
+
+function checking() {
+    alert("Variables are now: " + encodeNumber + " " + message + " " + encodeDirection + " " + encodeDecode);
+}
+
+
 function posToNeg(num) {
     return -Math.abs(num);
 }
 
 //adjust for L/R direction
-function createEncodeSpecifics(encodeDirection){
-if (encodeDirection == "L"){
-    encodeNumber = posToNeg(encodeNumber);
-}
+function createEncodeSpecifics(encodeDirection) {
+    if (encodeDirection == "L") {
+        encodeNumber = posToNeg(encodeNumber);
+    }
 }
 createEncodeSpecifics(encodeDirection, encodeNumber)
 
@@ -42,7 +70,7 @@ createEncodeSpecifics(encodeDirection, encodeNumber)
 function inputToArray(message) {
     inputArray = Array.from(message);
 }
-inputToArray(message);
+//inputToArray(message);
 
 //converting array to numbers
 function convertToNumbers(inputArray) {
@@ -138,25 +166,28 @@ function convertToNumbers(inputArray) {
 
 
 //altering numbers by encode specifics
-function applyEncoding() {
+
+
+function applyDecoding() {
     applyEncodeArray = Array.from(numberArray);
+    console.log(applyEncodeArray)
     let i;
     for (i = 0; i < applyEncodeArray.length; i++) {
-        if (isNaN(applyEncodeArray[i]) == false){
-        applyEncodeArray[i] = parseInt(applyEncodeArray[i]) + encodeNumber;
-        if (applyEncodeArray[i] > 26){
-            applyEncodeArray[i] -= 26
-            //console.log("this entry", applyEncodeArray[i], "is a number")
+        if (isNaN(applyEncodeArray[i]) == false) {
+            applyEncodeArray[i] = parseInt(applyEncodeArray[i]) - encodeNumber;
+            if (applyEncodeArray[i] > 26) {
+                applyEncodeArray[i] -= 26
+                //console.log("this entry", applyEncodeArray[i], "is a number")
+            }
+            if (applyEncodeArray[i] < 1) {
+                applyEncodeArray[i] += 26
+                //console.log("this entry", applyEncodeArray[i], "is a number")
+            }
+            if (isNaN(applyEncodeArray[i])) {
+                applyEncodeArray[i] = " ";
+            }
         }
-        if (applyEncodeArray[i] < 1){
-            applyEncodeArray[i] += 26
-            //console.log("this entry", applyEncodeArray[i], "is a number")
-        }
-        if (isNaN(applyEncodeArray[i])){
-            applyEncodeArray[i] = " ";
-        }
-    }
-    //else{console.log("this entry", applyEncodeArray[i], "is not a number")}
+        //else{console.log("this entry", applyEncodeArray[i], "is not a number")}
     }
 }
 
@@ -253,19 +284,82 @@ function convertToLetters() {
 }
 
 //turning letters into string
-function lettersToString(){
-encodedStringArray = Array.from(numbersToLettersArray)
-encodedString = encodedStringArray.join("")
+function lettersToString() {
+    encodedStringArray = Array.from(numbersToLettersArray)
+    encodedString = encodedStringArray.join("")
+    result = encodedString;
 }
 
-function encodeMessage(message){
-    createEncodeSpecifics(encodeDirection, encodeNumber)
+//encodeMessage goes below this line
+
+
+function decodeMessage() {
     inputToArray(message);
+    console.log(inputArray);
     convertToNumbers(inputArray);
-    applyEncoding();
+    console.log(numberArray)
+    applyDecoding();
+    console.log(applyEncodeArray);
     convertToLetters();
+    console.log(numbersToLettersArray);
     lettersToString();
-    console.log(encodedString)
+    console.log("Decoded string:", encodedString)
 }
 
-encodeMessage(message)
+
+//encodeMessage();
+//message = encodedString;
+//decodeMessage();
+
+function displayResult(result) {
+    document.getElementById("result").textContent = result;
+}
+
+function runCipher() {
+    grabInputs();
+    grabDirection();
+    createEncodeSpecifics(encodeDirection, encodeNumber)
+    if (encodeDecode == "encode") {
+        encodeMessage()
+    }
+    else if (encodeDecode == "decode") {
+        decodeMessage()
+    }
+    displayResult(result);
+}
+
+function applyEncoding() {
+    applyEncodeArray = Array.from(numberArray);
+    console.log(applyEncodeArray)
+    let i;
+    for (i = 0; i < applyEncodeArray.length; i++) {
+        if (isNaN(applyEncodeArray[i]) == false) {
+            applyEncodeArray[i] = parseInt(applyEncodeArray[i]) + parseInt(encodeNumber);
+            if (applyEncodeArray[i] > 26) {
+                applyEncodeArray[i] -= 26
+                //console.log("this entry", applyEncodeArray[i], "is a number")
+            }
+            if (applyEncodeArray[i] < 1) {
+                applyEncodeArray[i] += 26
+                //console.log("this entry", applyEncodeArray[i], "is a number")
+            }
+            if (isNaN(applyEncodeArray[i])) {
+                applyEncodeArray[i] = " ";
+            }
+        }
+        //else{console.log("this entry", applyEncodeArray[i], "is not a number")}
+    }
+}
+
+function encodeMessage() {
+    inputToArray(message);
+    console.log(inputArray);
+    convertToNumbers(inputArray);
+    console.log(numberArray)
+    applyEncoding();
+    console.log(applyEncodeArray);
+    convertToLetters();
+    console.log(numbersToLettersArray);
+    lettersToString();
+    console.log("Encoded string:", encodedString)
+}
