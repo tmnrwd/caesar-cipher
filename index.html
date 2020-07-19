@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,39 +10,48 @@
     <script src="index.js"></script>
     <title>The Caesar Cipher Page</title>
 </head>
+
 <body>
     <div id="whole-page" class="container-fluid">
         <div id="content">
-    
-    <div id="intro">        <h4>The Caesar Cipher Page</h4>
-    Have you ever wanted to play with an easily-cracked cipher? Here's your chance!</div><br>
 
-    <div>Enter the text you'd like to encode or decode: <input type="text" id="input-message"><br></div>
+            <div id="intro">
+                <h3>The Caesar Cipher Page</h3>
+                Have you ever wanted to play with an easily-cracked cipher? Here's your chance!
+            </div><br>
 
-    Would you like to encode or decode the text?<br>
-    Encode<input type="radio" name="en-de-code" id="encode-chosen"><br>
-    Decode<input type="radio" name="en-de-code" id="decode-chosen"><br>
+            <div>Enter the text you'd like to encode or decode: <input type="text" id="input-message"><br></div>
 
-    How much would you like to shift the letters by in the cipher?<br>
-    <input type="text" id="encode-number-box"><br>
+            Would you like to encode or decode the text?<br>
+            Encode<input type="radio" name="en-de-code" id="encode-chosen"><br>
+            Decode<input type="radio" name="en-de-code" id="decode-chosen"><br>
+            <br>
+            <h4>Code selection</h4>
+            Hint: if you're using the decode option, choose the shift that corresponds to how your message was
+            encoded.<br>
+            For example, choosing a right shift of 7 will decode messages that were encoded with a right shift of 7.
+            <br>
+            <br>
+            How much would you like to shift the letters by in the cipher?<br>
+            <input type="text" id="encode-number-box"><br>
 
-    Which way would you like to shift the cipher to shift letters?<br>
-    Right<input type="radio" name="shift" id="standard-shift"><br>
-    Left<input type="radio" name="shift" id="reverse-shift"><br>
-    <br>
-    <!--
+            Which way would you like to shift the cipher to shift letters?<br>
+            Right<input type="radio" name="shift" id="standard-shift"><br>
+            Left<input type="radio" name="shift" id="reverse-shift"><br>
+            <br>
+            <!--
     <button type="button" onclick="grabInputs()">Click here to grab inputs!</button>
     
     <button type="button" onclick="checking()">Click here to check variables!</button>
     -->
 
-    <button type="button" onclick="runCipher()">Click here to run the cipher!</button>
-<br>
-    Your result is:
-    <div id="result"></div>
+            <button type="button" onclick="runCipher()">Click here to run the cipher!</button>
+            <br>
+            Your result is:
+            <div id="result"></div>
 
-</div>
-</div>
+        </div>
+    </div>
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -53,6 +63,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
-        
+
 </body>
+
 </html>
